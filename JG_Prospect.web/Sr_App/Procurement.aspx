@@ -1421,9 +1421,9 @@
                         </div>
                         <asp:UpdatePanel ID="updtpnlfilter" runat="server" UpdateMode="Always">
                             <ContentTemplate>
-                                <table>
+                                <table style="width:100%;border-collapse:collapse;border-width:1px">
                                     <tr>
-                                        <td>Vendor Status</td>
+                                        <td style="padding-top: 19px;">Vendor Status</td>
                                         <td>
                                             <asp:DropDownList ID="ddlVendorStatusfltr" runat="server" TabIndex="1" Style="width: 120px;" AutoPostBack="true" OnSelectedIndexChanged="ddlVendorStatusfltr_SelectedIndexChanged">
                                                 <asp:ListItem>Select</asp:ListItem>
@@ -1433,10 +1433,11 @@
                                                 <asp:ListItem>Deactivate</asp:ListItem>
                                             </asp:DropDownList>
                                         </td>
-                                        <td>
-                                            <asp:RadioButton ID="rdoRetailWholesale" runat="server" Checked="true" Text="Retail/Wholesale" GroupName="MT" OnCheckedChanged="rdoRetailWholesale_CheckedChanged" AutoPostBack="true" />
-                                        </td>
-                                        <td>
+                                        <td colspan="2" style="padding-top: 19px;">
+                                          <asp:RadioButton ID="rdoAll" runat="server" Checked="true" Text="All" GroupName="MT" OnCheckedChanged="rdoAll_CheckedChanged" AutoPostBack="true" />
+                                          <asp:RadioButton ID="rdoRetailWholesale" runat="server" Checked="false" Text="Retail/Wholesale" GroupName="MT" OnCheckedChanged="rdoRetailWholesale_CheckedChanged" AutoPostBack="true" />
+                                        <%--</td>
+                                        <td>--%>
                                             <asp:RadioButton ID="rdoManufacturer" runat="server" Text="Manufacturer" GroupName="MT" OnCheckedChanged="rdoManufacturer_CheckedChanged" AutoPostBack="true" />
                                         </td>
                                         <td colspan="2">
@@ -1452,19 +1453,19 @@
 
                                     </tr>
                                     <tr>
-                                        <td>Product Category</td>
+                                        <td style="padding-top: 19px;">Product Category</td>
                                         <td>
                                             <%--<asp:DropDownList ID="ddlprdtCategory" runat="server" Width="150px" AutoPostBack="true" OnSelectedIndexChanged="ddlprdtCategory_SelectedIndexChanged"></asp:DropDownList>--%>
                                             <asp:DropDownCheckBoxes CssClass="form_panel_checkbox_dropdown" ID="ddlprdtCategory" runat="server" UseSelectAllNode="false" AutoPostBack="true" OnSelectedIndexChanged="ddlprdtCategory_SelectedIndexChanged">
-                                                <Style SelectBoxWidth="150" DropDownBoxBoxWidth="190" DropDownBoxBoxHeight="150" />
+                                                <Style SelectBoxWidth="100%" DropDownBoxBoxWidth="190" DropDownBoxBoxHeight="150" />
                                                 <Items></Items>
                                             </asp:DropDownCheckBoxes>
                                         </td>
-                                        <td>Vendor Category</td>
+                                        <td style="padding-top: 19px;">Vendor Category</td>
                                         <td>
                                             <%--<asp:DropDownList ID="ddlVndrCategory" runat="server" Width="150px" AutoPostBack="True" OnSelectedIndexChanged="ddlVndrCategory_SelectedIndexChanged"></asp:DropDownList>--%>
                                             <asp:DropDownCheckBoxes CssClass="form_panel_checkbox_dropdown" ID="ddlVndrCategory" runat="server" UseSelectAllNode="false" AutoPostBack="true" OnSelectedIndexChanged="ddlVndrCategory_SelectedIndexChanged">
-                                                <Style SelectBoxWidth="150" DropDownBoxBoxWidth="120" DropDownBoxBoxHeight="150" />
+                                                <Style SelectBoxWidth="100%" DropDownBoxBoxWidth="120" DropDownBoxBoxHeight="150" />
                                                 <Items></Items>
                                             </asp:DropDownCheckBoxes>
                                             <br />
@@ -1551,11 +1552,11 @@
                                                 </table>
                                             </asp:Panel>
                                         </td>
-                                        <td>Vendor Sub Category</td>
+                                        <td style="padding-top: 19px;">Vendor Sub Category</td>
                                         <td>
                                             <%--<asp:DropDownList ID="ddlVendorSubCategory" runat="server" Width="150px" AutoPostBack="True" OnSelectedIndexChanged="ddlVendorSubCategory_SelectedIndexChanged"></asp:DropDownList>--%>
                                             <asp:DropDownCheckBoxes CssClass="form_panel_checkbox_dropdown" ID="ddlVendorSubCategory" runat="server" UseSelectAllNode="false" AutoPostBack="true" OnSelectedIndexChanged="ddlVendorSubCategory_SelectedIndexChanged">
-                                                <Style SelectBoxWidth="150" DropDownBoxBoxWidth="120" DropDownBoxBoxHeight="150" />
+                                                <Style SelectBoxWidth="100%" DropDownBoxBoxWidth="120" DropDownBoxBoxHeight="150" />
                                                 <Items></Items>
                                             </asp:DropDownCheckBoxes>
                                             <br />
@@ -1717,7 +1718,7 @@
                                                                 <asp:TextBox ID="txtWebsite" TabIndex="3" runat="server" MaxLength="100"></asp:TextBox>
                                                                 <asp:Button runat="server" ID="btnAddWebsite" TabIndex="4" Text="Add" ValidationGroup="AddWebsite" Style="background: url(img/main-header-bg.png) repeat-x; color: #fff; cursor: pointer;" OnClick="btnAddWebsite_Click" Height="30px" />&nbsp;
                                                                 <asp:RequiredFieldValidator ID="rfvWebSite" runat="server" ControlToValidate="ddlWebSite" Display="Dynamic"
-                                                                    ValidationGroup="addvendor" ErrorMessage="Please Enter Website." ForeColor="Red" InitialValue=""></asp:RequiredFieldValidator>
+                                                                    ValidationGroup="addvendor" ErrorMessage="Please Enter Website." ForeColor="Red"></asp:RequiredFieldValidator>
                                                                 <asp:RegularExpressionValidator ID="revWebsite" runat="server" ControlToValidate="txtWebsite" Display="Dynamic"
                                                                     ValidationGroup="AddWebsite" ErrorMessage="Please Enter Valid Website." ForeColor="Red" ValidationExpression="(([\w]+:)?\/\/)?(([\d\w]|%[a-fA-f\d]{2,2})+(:([\d\w]|%[a-fA-f\d]{2,2})+)?@)?([\d\w][-\d\w]{0,253}[\d\w]\.)+[\w]{2,4}(:[\d]+)?(\/([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)*(\?(&?([-+_~.\d\w]|%[a-fA-f\d]{2,2})=?)*)?(#([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)?$" />
                                                             </td>
@@ -1742,13 +1743,13 @@
                                                                 <label>Vendor Status</label><br />
                                                                 <asp:DropDownList ID="ddlVendorStatus" runat="server" TabIndex="3">
                                                                     <asp:ListItem Value="Prospect" Selected="True">Prospect</asp:ListItem>
-                                                                    <asp:ListItem Value="Active" style="color: red !important;">Active</asp:ListItem>
-                                                                    <asp:ListItem Value="Deactivate" style="color: gray !important;">Deactivate</asp:ListItem>
+                                                                    <asp:ListItem Value="Active">Active</asp:ListItem>
+                                                                    <asp:ListItem Value="Deactivate">Deactivate</asp:ListItem>
                                                                 </asp:DropDownList>
                                                             </td>
                                                             <td colspan="2">
                                                                 <label>Hours of operation:</label><br />
-                                                                <asp:CheckBox ID="chk24Hours" runat="server" AutoPostBack="false" Text="24 Hr" />
+                                                                <asp:CheckBox ID="chk24Hours" runat="server" Text="24 Hr" />
                                                                 <asp:DropDownList ID="ddlHoursOfOperation" runat="server" TabIndex="3" Width="180px" OnSelectedIndexChanged="ddlHoursOfOperation_SelectedIndexChanged">
                                                                 </asp:DropDownList>
                                                                 <br />
@@ -1790,7 +1791,7 @@
                                                                         </td>
                                                                         <td>
                                                                             <label>Address Location:</label><br />
-                                                                            <asp:DropDownList ID="DrpVendorAddress" TabIndex="1" AutoPostBack="true" OnSelectedIndexChanged="DrpVendorAddress_SelectedIndexChanged" runat="server" Style="width: 180px;" CssClass="clsvendoraddress">
+                                                                            <asp:DropDownList ID="DrpVendorAddress" TabIndex="1" AutoPostBack="True" OnSelectedIndexChanged="DrpVendorAddress_SelectedIndexChanged" runat="server" Style="width: 180px;" CssClass="clsvendoraddress">
                                                                                 <asp:ListItem Value="0">Primary</asp:ListItem>
                                                                             </asp:DropDownList>
                                                                         </td>
@@ -1822,7 +1823,7 @@
                                                                         <td>
                                                                             <label>Country:</label><br />
                                                                             <asp:DropDownList ID="ddlCountry" TabIndex="1" runat="server" Width="190px" CssClass="clstxtCountry0">
-                                                                                <asp:ListItem Value="">Select Country</asp:ListItem>
+                                                                                <asp:ListItem>Select Country</asp:ListItem>
                                                                                 <asp:ListItem Value="AF">Afghanistan</asp:ListItem>
                                                                                 <asp:ListItem Value="AL">Albania</asp:ListItem>
                                                                                 <asp:ListItem Value="DZ">Algeria</asp:ListItem>
@@ -2107,14 +2108,13 @@
                                                                                 <label>
                                                                                     Last Name</label><br />
                                                                                 <asp:TextBox ID="txtPrimaryLName0" runat="server" MaxLength="50" class="clslname" />
-                                                                                <%--    <asp:TextBox ID="txtPrimaryLName0" runat="server" MaxLength="50"></asp:TextBox>--%>
                                                                                 <br />
 
                                                                             </td>
                                                                             <td>
                                                                                 <label>Title</label><br />
                                                                                 <asp:DropDownList ID="ddlPrimaryTitle0" runat="server" class="clstitle">
-                                                                                    <asp:ListItem Value="">Select</asp:ListItem>
+                                                                                    <asp:ListItem>Select</asp:ListItem>
                                                                                     <asp:ListItem Value="Secretary">Secretary</asp:ListItem>
                                                                                     <asp:ListItem Value="FloorSalesman">Floor salesman</asp:ListItem>
                                                                                     <asp:ListItem Value="SalesAcctExecutive">Sales/acct. executive</asp:ListItem>
@@ -2133,7 +2133,7 @@
                                                                                     <asp:TextBox ID="txtPrimaryContactExten0" TabIndex="1" runat="server" placeholder="Extension" class="clsmaskphoneexten" onkeypress="return isNumericKey(event);" MaxLength="6" Width="34%"></asp:TextBox>
                                                                                     <label>Phone Type</label>
                                                                                     <asp:DropDownList ID="ddlPrimaryPhoneType0" runat="server" class="clsphonetype">
-                                                                                        <asp:ListItem Value="">Select</asp:ListItem>
+                                                                                        <asp:ListItem>Select</asp:ListItem>
                                                                                         <asp:ListItem Value="Cell">Cell Phone #</asp:ListItem>
                                                                                         <asp:ListItem Value="House">House Phone  #</asp:ListItem>
                                                                                         <asp:ListItem Value="Work">Work Phone #</asp:ListItem>
@@ -2172,21 +2172,19 @@
                                                                                 <label>
                                                                                     First Name</label><br />
                                                                                 <asp:TextBox ID="txtSecFName0" runat="server" class="clsfname" MaxLength="50"></asp:TextBox>
-                                                                                <%--<asp:TextBox ID="txtSecFName0" runat="server" MaxLength="50"></asp:TextBox>--%>
                                                                             </td>
 
                                                                             <td>
                                                                                 <label>
                                                                                     Last Name</label><br />
                                                                                 <asp:TextBox ID="txtSecLName0" runat="server" class="clslname" MaxLength="50"></asp:TextBox>
-                                                                                <%--  <asp:TextBox ID="txtSecLName0" runat="server" MaxLength="50"></asp:TextBox>--%>
                                                                                 <br />
 
                                                                             </td>
                                                                             <td>
                                                                                 <label>Title</label><br />
                                                                                 <asp:DropDownList ID="ddlSecTitle0" runat="server" class="clstitle">
-                                                                                    <asp:ListItem Value="">Select</asp:ListItem>
+                                                                                    <asp:ListItem>Select</asp:ListItem>
                                                                                     <asp:ListItem Value="Secretary">Secretary</asp:ListItem>
                                                                                     <asp:ListItem Value="FloorSalesman">Floor salesman</asp:ListItem>
                                                                                     <asp:ListItem Value="SalesAcctExecutive">Sales/acct. executive</asp:ListItem>
@@ -2205,7 +2203,7 @@
                                                                                     <asp:TextBox ID="txtSecContactExten0" TabIndex="1" runat="server" MaxLength="6" class="clsmaskphoneexten" onkeypress="return isNumericKey(event);" placeholder="Extension" Width="35%"></asp:TextBox>
                                                                                     <label>Phone Type</label>
                                                                                     <asp:DropDownList ID="ddlSecPhoneType0" runat="server" class="clsphonetype">
-                                                                                        <asp:ListItem Value="">Select</asp:ListItem>
+                                                                                        <asp:ListItem>Select</asp:ListItem>
                                                                                         <asp:ListItem Value="Cell">Cell Phone #</asp:ListItem>
                                                                                         <asp:ListItem Value="House">House Phone  #</asp:ListItem>
                                                                                         <asp:ListItem Value="Work">Work Phone #</asp:ListItem>
@@ -2245,20 +2243,18 @@
                                                                                 <label>
                                                                                     First Name</label><br />
                                                                                 <asp:TextBox ID="txtAltFName0" runat="server" class="clsfname" MaxLength="50"></asp:TextBox>
-                                                                                <%--<asp:TextBox ID="txtAltFName0" runat="server" MaxLength="50"></asp:TextBox>--%>
                                                                                 <br />
                                                                             </td>
                                                                             <td>
                                                                                 <label>
                                                                                     Last Name</label><br />
                                                                                 <asp:TextBox ID="txtAltLName0" runat="server" class="clslname" MaxLength="50"></asp:TextBox>
-                                                                                <%--<asp:TextBox ID="txtAltLName0" runat="server" MaxLength="50"></asp:TextBox>--%>
                                                                                 <br />
                                                                             </td>
                                                                             <td>
                                                                                 <label>Title</label><br />
                                                                                 <asp:DropDownList ID="ddlAltTitle0" runat="server" class="clstitle">
-                                                                                    <asp:ListItem Value="">Select</asp:ListItem>
+                                                                                    <asp:ListItem>Select</asp:ListItem>
                                                                                     <asp:ListItem Value="Secretary">Secretary</asp:ListItem>
                                                                                     <asp:ListItem Value="FloorSalesman">Floor salesman</asp:ListItem>
                                                                                     <asp:ListItem Value="SalesAcctExecutive">Sales/acct. executive</asp:ListItem>
@@ -2277,7 +2273,7 @@
                                                                                     <asp:TextBox ID="txtAltContactExten0" TabIndex="1" runat="server" MaxLength="6" class="clsmaskphoneexten" onkeypress="return isNumericKey(event);" placeholder="Extension" Width="32%"></asp:TextBox>
                                                                                     <label>Phone Type</label>
                                                                                     <asp:DropDownList ID="ddlAltPhoneType0" runat="server" class="clsphonetype">
-                                                                                        <asp:ListItem Value="">Select</asp:ListItem>
+                                                                                        <asp:ListItem>Select</asp:ListItem>
                                                                                         <asp:ListItem Value="Cell">Cell Phone #</asp:ListItem>
                                                                                         <asp:ListItem Value="House">House Phone  #</asp:ListItem>
                                                                                         <asp:ListItem Value="Work">Work Phone #</asp:ListItem>
