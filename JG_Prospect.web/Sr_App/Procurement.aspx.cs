@@ -315,6 +315,13 @@ namespace JG_Prospect.Sr_App
         public void BindAllVendorCategory()
         {
             DataSet ds = new DataSet();
+      bool? isRetailWholesale = rdoRetailWholesale.Checked;
+      bool? isManufacturer = rdoManufacturer.Checked;
+      if (rdoAll.Checked)
+      {
+        isRetailWholesale = null;
+        isManufacturer = null;
+      }
             ds = VendorBLL.Instance.fetchvendorcategory(rdoRetailWholesale.Checked, rdoManufacturer.Checked);
             ddlVndrCategory.DataSource = ds;
             ddlVndrCategory.DataTextField = ds.Tables[0].Columns[1].ToString();
@@ -352,9 +359,21 @@ namespace JG_Prospect.Sr_App
             }
         }
 
+        protected void rdoAll_CheckedChanged(object sender, EventArgs e)
+        {
+          if (string.IsNullOrEmpty(ddlprdtCategory.SelectedValue)
+              || ddlprdtCategory.SelectedValue.Equals("Select"))
+          {
+            bindvendorcategory();
+          }
+          ddlVendorSubCategory.SelectedIndex = -1;
+          BindFilteredVendorList();
+        }
+
         protected void rdoRetailWholesale_CheckedChanged(object sender, EventArgs e)
         {
-            if (ddlprdtCategory.SelectedValue.Equals("Select"))
+            if (string.IsNullOrEmpty(ddlprdtCategory.SelectedValue)
+                || ddlprdtCategory.SelectedValue.Equals("Select"))
             {
                 bindvendorcategory();
             }
@@ -363,7 +382,8 @@ namespace JG_Prospect.Sr_App
 
         protected void rdoManufacturer_CheckedChanged(object sender, EventArgs e)
         {
-            if (ddlprdtCategory.SelectedValue.Equals("Select"))
+            if (string.IsNullOrEmpty(ddlprdtCategory.SelectedValue)
+                || ddlprdtCategory.SelectedValue.Equals("Select"))
             {
                 bindvendorcategory();
             }
@@ -382,6 +402,46 @@ namespace JG_Prospect.Sr_App
         {
             BindFilteredVendorList();
         }
+        protected void chkProductCategorySelectAll_CheckedChanged(object sender, EventArgs e)
+        {
+          ddlVndrCategory.SelectedIndex = -1;
+          ddlVendorSubCategory.SelectedIndex = -1;
+          //Select All Items
+          foreach (System.Web.UI.WebControls.ListItem item in ddlprdtCategory.Items)
+          {
+            item.Selected = chkProductCategorySelectAll.Checked;
+          }
+
+          BindVendorByProdCat(ddlprdtCategory.SelectedValue.ToString());
+          ViewState["CheckedPc"] = null;
+          if (!ddlprdtCategory.SelectedValue.Equals("Select"))
+          {
+            ViewState["CheckedPc"] = ddlprdtCategory.SelectedValue;
+          }
+          BindVendorCatPopup();
+          if (ddlprdtCategory.SelectedValue.ToString() != "Select" && ddlprdtCategory.SelectedValue.ToString() != "")
+          {
+            ddlProductCatgoryPopup.SelectedValue = ddlprdtCategory.SelectedValue;
+
+            List<string> lstSelectedProductCategories = new List<string>();
+            foreach (System.Web.UI.WebControls.ListItem item in ddlprdtCategory.Items)
+            {
+              if (item.Selected)
+              { lstSelectedProductCategories.Add(item.Text); }
+            }
+            if (lstSelectedProductCategories.Count > 0)
+            { ddlprdtCategory.Texts.SelectBoxCaption = string.Join(", ", lstSelectedProductCategories); }
+          }
+          else
+          {
+            BindAllVendorCategory();
+          }
+          BindFilteredVendorList();
+
+          UpdatePopupProductCategoryList();
+
+
+        }
         protected void ddlprdtCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
             ddlVndrCategory.SelectedIndex = -1;
@@ -396,6 +456,15 @@ namespace JG_Prospect.Sr_App
             if (ddlprdtCategory.SelectedValue.ToString() != "Select" && ddlprdtCategory.SelectedValue.ToString() != "")
             {
                 ddlProductCatgoryPopup.SelectedValue = ddlprdtCategory.SelectedValue;
+
+                List<string> lstSelectedProductCategories = new List<string>();
+                foreach (System.Web.UI.WebControls.ListItem item in ddlprdtCategory.Items)
+                {
+                  if (item.Selected)
+                  { lstSelectedProductCategories.Add(item.Text); }
+                }
+                if (lstSelectedProductCategories.Count > 0)
+                { ddlprdtCategory.Texts.SelectBoxCaption = string.Join(", ", lstSelectedProductCategories); }
             }
             else
             {
@@ -511,11 +580,12 @@ namespace JG_Prospect.Sr_App
             DataSet ds = new DataSet();
             ds = AdminBLL.Instance.GetVendorCategory(ProductId, rdoRetailWholesale.Checked, rdoManufacturer.Checked);
             string strPrdtCategory = string.Empty;
+      
             foreach (System.Web.UI.WebControls.ListItem item in ddlprdtCategory.Items)
             {
                 if (item.Selected)
                 {
-                    strPrdtCategory += item.Value + ",";
+                    strPrdtCategory += item.Value + ",";          
                 }
             }
 
@@ -562,6 +632,46 @@ namespace JG_Prospect.Sr_App
                 grdVendorList.DataBind();
             }
         }
+    
+        protected void chkVendorCategorySelectAll_CheckedChanged(object sender, EventArgs e)
+        {
+          ddlVendorSubCategory.SelectedIndex = -1;
+          //Select All Items
+          foreach (System.Web.UI.WebControls.ListItem item in ddlVndrCategory.Items)
+          {
+            item.Selected = chkVendorCategorySelectAll.Checked;
+          }
+          BindVendorSubCatByVendorCat(ddlVndrCategory.SelectedValue.ToString());
+          //string ManufacturerType = GetManufacturerType();
+          ViewState["CheckedVc"] = null;
+          if (ddlVndrCategory.SelectedValue.ToString() != "0" && ddlVndrCategory.SelectedValue.ToString() != "")
+          {
+            ddlVendorCatPopup.SelectedValue = ddlVndrCategory.SelectedValue;
+            ddlvendercategoryname.SelectedValue = ddlVndrCategory.SelectedValue;
+            //FilterVendors(ddlVndrCategory.SelectedValue.ToString(), "VendorCategory", ManufacturerType, "", GetVendorStatus());
+            ViewState["CheckedVc"] = ddlVndrCategory.SelectedValue;
+
+            List<string> lstSelectedCategories = new List<string>();
+            foreach (System.Web.UI.WebControls.ListItem li in chkVendorCategoryList.Items)
+            {
+              if (li.Selected == true)
+              {
+                lstSelectedCategories.Add(li.Text);
+              }
+            }
+            if (lstSelectedCategories.Count > 0)
+            { ddlVndrCategory.Texts.SelectBoxCaption = string.Join(", ", lstSelectedCategories); }
+          }
+          else if (ddlVendorStatusfltr.SelectedValue.ToString() != "All")
+          {
+            FilterVendorByProductCategory();
+          }
+          BindFilteredVendorList();
+
+          UpdatePopupVendorCategoryList();
+
+
+        }
         protected void ddlVndrCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -575,6 +685,17 @@ namespace JG_Prospect.Sr_App
                 ddlvendercategoryname.SelectedValue = ddlVndrCategory.SelectedValue;
                 //FilterVendors(ddlVndrCategory.SelectedValue.ToString(), "VendorCategory", ManufacturerType, "", GetVendorStatus());
                 ViewState["CheckedVc"] = ddlVndrCategory.SelectedValue;
+
+                List<string> lstSelectedCategories = new List<string>();
+                foreach (System.Web.UI.WebControls.ListItem li in chkVendorCategoryList.Items)
+                {
+                  if (li.Selected == true)
+                  {
+                    lstSelectedCategories.Add(li.Text);
+                  }
+                }
+                if (lstSelectedCategories.Count > 0)
+                { ddlVndrCategory.Texts.SelectBoxCaption = string.Join(", ", lstSelectedCategories); }
             }
             else if (ddlVendorStatusfltr.SelectedValue.ToString() != "All")
             {
@@ -623,6 +744,32 @@ namespace JG_Prospect.Sr_App
             ddlVendorSubCategory1.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Select", "Select"));
         }
 
+        protected void chkVendorSubCategorySelectAll_CheckedChanged(object sender, EventArgs e)
+        {
+          //Select All Items
+          foreach (System.Web.UI.WebControls.ListItem item in ddlVendorSubCategory.Items)
+          {
+            item.Selected = chkVendorSubCategorySelectAll.Checked;
+          }
+          BindFilteredVendorList();
+          ViewState["CheckedVsc"] = null;
+          if (!ddlVendorSubCategory.SelectedValue.Equals("Select"))
+          {
+            ViewState["CheckedVsc"] = ddlVendorSubCategory.SelectedValue;
+          }
+
+          List<string> lstSelectedCategories = new List<string>();
+          foreach (System.Web.UI.WebControls.ListItem li in ddlVendorSubCategory.Items)
+          {
+            if (li.Selected)
+            { lstSelectedCategories.Add(li.Text); }
+          }
+
+          if (lstSelectedCategories.Count > 0)
+          { ddlVendorSubCategory.Texts.SelectBoxCaption = string.Join(", ", lstSelectedCategories); }
+          UpdatePopupVendorSubCategoryList();
+        }
+
         protected void ddlVendorSubCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
             BindFilteredVendorList();
@@ -632,6 +779,15 @@ namespace JG_Prospect.Sr_App
                 ViewState["CheckedVsc"] = ddlVendorSubCategory.SelectedValue;
             }
 
+            List<string> lstSelectedCategories = new List<string>();
+            foreach (System.Web.UI.WebControls.ListItem li in ddlVendorSubCategory.Items)
+            {
+              if (li.Selected)
+              { lstSelectedCategories.Add(li.Text); }
+            }
+
+            if (lstSelectedCategories.Count > 0)
+            { ddlVendorSubCategory.Texts.SelectBoxCaption = string.Join(", ", lstSelectedCategories); }
             UpdatePopupVendorSubCategoryList();
         }
 
@@ -1166,8 +1322,17 @@ namespace JG_Prospect.Sr_App
         protected void bindvendorcategory()
         {
             DataSet ds = new DataSet();
-            ds = VendorBLL.Instance.fetchvendorcategory(rdoRetailWholesale.Checked, rdoManufacturer.Checked);
-            ddlVndrCategory.DataSource = ds;
+
+      bool? isRetailWholesale = rdoRetailWholesale.Checked;
+      bool? isManufacturer = rdoManufacturer.Checked;
+      if (rdoAll.Checked)
+      {
+        isRetailWholesale = null;
+        isManufacturer = null;
+      }
+
+      ds = VendorBLL.Instance.fetchvendorcategory(rdoRetailWholesale.Checked, rdoManufacturer.Checked);
+      ddlVndrCategory.DataSource = ds;
             ddlVndrCategory.DataTextField = ds.Tables[0].Columns[1].ToString();
             ddlVndrCategory.DataValueField = ds.Tables[0].Columns[0].ToString();
             ddlVndrCategory.DataBind();
@@ -1191,8 +1356,16 @@ namespace JG_Prospect.Sr_App
         public void BindVendorCatPopup()
         {
             DataSet ds = new DataSet();
-            ds = VendorBLL.Instance.fetchvendorcategory(rdoRetailWholesale.Checked, rdoManufacturer.Checked);
-            ddlVendorCatPopup.DataSource = ds;
+      bool? isRetailWholesale = rdoRetailWholesale.Checked;
+      bool? isManufacturer = rdoManufacturer.Checked;
+      if (rdoAll.Checked)
+      {
+        isRetailWholesale = null;
+        isManufacturer = null;
+      }
+
+      ds = VendorBLL.Instance.fetchvendorcategory(rdoRetailWholesale.Checked, rdoManufacturer.Checked);
+      ddlVendorCatPopup.DataSource = ds;
             ddlVendorCatPopup.DataTextField = ds.Tables[0].Columns[1].ToString();
             ddlVendorCatPopup.DataValueField = ds.Tables[0].Columns[0].ToString();
             ddlVendorCatPopup.DataBind();
@@ -1574,8 +1747,16 @@ namespace JG_Prospect.Sr_App
         protected void bindfordeletevender()
         {
             DataSet ds = new DataSet();
-            ds = VendorBLL.Instance.fetchvendorcategory(rdoRetailWholesale.Checked, rdoManufacturer.Checked);
-            ddlvendercategoryname.DataSource = ds;
+      bool? isRetailWholesale = rdoRetailWholesale.Checked;
+      bool? isManufacturer = rdoManufacturer.Checked;
+      if (rdoAll.Checked)
+      {
+        isRetailWholesale = null;
+        isManufacturer = null;
+      }
+
+      ds = VendorBLL.Instance.fetchvendorcategory(rdoRetailWholesale.Checked, rdoManufacturer.Checked);
+      ddlvendercategoryname.DataSource = ds;
             ddlvendercategoryname.DataTextField = ds.Tables[0].Columns[1].ToString();
             ddlvendercategoryname.DataValueField = ds.Tables[0].Columns[0].ToString();
             ddlvendercategoryname.DataBind();
@@ -1641,8 +1822,16 @@ namespace JG_Prospect.Sr_App
             if (ddlprdtCategory.SelectedValue.ToString() == "Select")
             {
                 DataSet ds = new DataSet();
-                ds = VendorBLL.Instance.fetchvendorcategory(rdoRetailWholesale.Checked, rdoManufacturer.Checked);
-                ddlVndrCategory.DataSource = ds;
+        bool? isRetailWholesale = rdoRetailWholesale.Checked;
+        bool? isManufacturer = rdoManufacturer.Checked;
+        if (rdoAll.Checked)
+        {
+          isRetailWholesale = null;
+          isManufacturer = null;
+        }
+
+        ds = VendorBLL.Instance.fetchvendorcategory(rdoRetailWholesale.Checked, rdoManufacturer.Checked);
+        ddlVndrCategory.DataSource = ds;
                 ddlVndrCategory.DataTextField = ds.Tables[0].Columns[1].ToString();
                 ddlVndrCategory.DataValueField = ds.Tables[0].Columns[0].ToString();
                 ddlVndrCategory.DataBind();

@@ -231,7 +231,7 @@ namespace JG_Prospect.BLL
             return VendorDAL.Instance.GetVendorSearchAutoSuggestion(strSearchString);
         }
 
-        public DataSet fetchvendorcategory(bool Isretail_Wholesale, bool IsManufacturer)
+        public DataSet fetchvendorcategory(bool? Isretail_Wholesale, bool? IsManufacturer)
         {
             return VendorDAL.Instance.fetchvendorcategory(Isretail_Wholesale, IsManufacturer);
         }

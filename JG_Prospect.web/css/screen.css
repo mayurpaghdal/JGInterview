@@ -676,11 +676,13 @@ form.inline {
 }
 
 .form_panel ul li table tr td label, .form_panel table tr td label {
-    width: 33%;
-    display: inline-block;
+    display: inline;
     margin-right: 2%;
     padding-top: 5px;
-    font-weight: normal; /*vertical-align:top;*/
+    font-weight: normal;
+    vertical-align: top;
+    padding-left: 2px;
+}
 }
 
 .form_panel ul li table.no_line td, .form_panel table.no_line td {
