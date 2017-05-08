@@ -1147,6 +1147,15 @@ namespace JG_Prospect.Sr_App {
         protected global::System.Web.UI.WebControls.Button btnEditVendor;
         
         /// <summary>
+        /// chkProductCategorySelectAll control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkProductCategorySelectAll;
+        
+        /// <summary>
         /// ddlprdtCategory control.
         /// </summary>
         /// <remarks>
@@ -1154,6 +1163,15 @@ namespace JG_Prospect.Sr_App {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Saplin.Controls.DropDownCheckBoxes ddlprdtCategory;
+        
+        /// <summary>
+        /// chkVendorCategorySelectAll control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkVendorCategorySelectAll;
         
         /// <summary>
         /// ddlVndrCategory control.
@@ -1316,6 +1334,15 @@ namespace JG_Prospect.Sr_App {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCancel2;
+        
+        /// <summary>
+        /// chkVendorSubCategorySelectAll control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkVendorSubCategorySelectAll;
         
         /// <summary>
         /// ddlVendorSubCategory control.

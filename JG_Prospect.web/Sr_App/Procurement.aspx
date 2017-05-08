@@ -1423,8 +1423,8 @@
                             <ContentTemplate>
                                 <table style="width:100%;border-collapse:collapse;border-width:1px">
                                     <tr>
-                                        <td style="padding-top: 19px;">Vendor Status</td>
-                                        <td>
+                                        <td ><b>Vendor Status</b>
+                                          <div>
                                             <asp:DropDownList ID="ddlVendorStatusfltr" runat="server" TabIndex="1" Style="width: 120px;" AutoPostBack="true" OnSelectedIndexChanged="ddlVendorStatusfltr_SelectedIndexChanged">
                                                 <asp:ListItem>Select</asp:ListItem>
                                                 <asp:ListItem Selected="True">All</asp:ListItem>
@@ -1432,15 +1432,15 @@
                                                 <asp:ListItem>Active-Past</asp:ListItem>
                                                 <asp:ListItem>Deactivate</asp:ListItem>
                                             </asp:DropDownList>
+                                          </div>
                                         </td>
-                                        <td colspan="2" style="padding-top: 19px;">
+                                        <td style="padding-top: 25px;">
                                           <asp:RadioButton ID="rdoAll" runat="server" Checked="true" Text="All" GroupName="MT" OnCheckedChanged="rdoAll_CheckedChanged" AutoPostBack="true" />
                                           <asp:RadioButton ID="rdoRetailWholesale" runat="server" Checked="false" Text="Retail/Wholesale" GroupName="MT" OnCheckedChanged="rdoRetailWholesale_CheckedChanged" AutoPostBack="true" />
-                                        <%--</td>
-                                        <td>--%>
+                                        
                                             <asp:RadioButton ID="rdoManufacturer" runat="server" Text="Manufacturer" GroupName="MT" OnCheckedChanged="rdoManufacturer_CheckedChanged" AutoPostBack="true" />
                                         </td>
-                                        <td colspan="2">
+                                        <td style="padding-top: 19px;">
                                             <%--<div class="ui-widget">--%>
                                             <asp:TextBox ID="txtVendorSearchBox" runat="server" placeholder="Search" Width="90%"></asp:TextBox>
                                             <%--</div>--%>
@@ -1453,16 +1453,23 @@
 
                                     </tr>
                                     <tr>
-                                        <td style="padding-top: 19px;">Product Category</td>
-                                        <td>
+                                        <td style="padding-top: 19px;"><b>Product Category</b>
+                                          <div>
+                                            <asp:CheckBox runat="server" ID="chkProductCategorySelectAll" AutoPostBack="true" Text="Select All" OnCheckedChanged="chkProductCategorySelectAll_CheckChanged"/>
+                                          </div>
+                                          <div>
                                             <%--<asp:DropDownList ID="ddlprdtCategory" runat="server" Width="150px" AutoPostBack="true" OnSelectedIndexChanged="ddlprdtCategory_SelectedIndexChanged"></asp:DropDownList>--%>
                                             <asp:DropDownCheckBoxes CssClass="form_panel_checkbox_dropdown" ID="ddlprdtCategory" runat="server" UseSelectAllNode="false" AutoPostBack="true" OnSelectedIndexChanged="ddlprdtCategory_SelectedIndexChanged">
                                                 <Style SelectBoxWidth="100%" DropDownBoxBoxWidth="190" DropDownBoxBoxHeight="150" />
                                                 <Items></Items>
                                             </asp:DropDownCheckBoxes>
+                                            </div>
                                         </td>
-                                        <td style="padding-top: 19px;">Vendor Category</td>
-                                        <td>
+                                        <td style="padding-top: 19px;"><b>Vendor Category</b>
+                                          <div>
+                                            <asp:CheckBox runat="server" ID="chkVendorCategorySelectAll" Text="Select All" AutoPostBack="true" OnCheckedChanged="chkVendorCategorySelectAll_CheckedChanged" />
+                                          </div>
+                                          <div>
                                             <%--<asp:DropDownList ID="ddlVndrCategory" runat="server" Width="150px" AutoPostBack="True" OnSelectedIndexChanged="ddlVndrCategory_SelectedIndexChanged"></asp:DropDownList>--%>
                                             <asp:DropDownCheckBoxes CssClass="form_panel_checkbox_dropdown" ID="ddlVndrCategory" runat="server" UseSelectAllNode="false" AutoPostBack="true" OnSelectedIndexChanged="ddlVndrCategory_SelectedIndexChanged">
                                                 <Style SelectBoxWidth="100%" DropDownBoxBoxWidth="120" DropDownBoxBoxHeight="150" />
@@ -1551,9 +1558,13 @@
                                                     </tr>
                                                 </table>
                                             </asp:Panel>
+                                            </div>
                                         </td>
-                                        <td style="padding-top: 19px;">Vendor Sub Category</td>
-                                        <td>
+                                        <td style="padding-top: 19px;"><b>Vendor Sub Category</b>
+                                          <div>
+                                            <asp:CheckBox runat="server" ID="chkVendorSubCategorySelectAll" Text="Select All" AutoPostBack="true" OnCheckedChanged="chkVendorSubCategorySelectAll_CheckedChanged" />
+                                          </div>
+                                          <div>
                                             <%--<asp:DropDownList ID="ddlVendorSubCategory" runat="server" Width="150px" AutoPostBack="True" OnSelectedIndexChanged="ddlVendorSubCategory_SelectedIndexChanged"></asp:DropDownList>--%>
                                             <asp:DropDownCheckBoxes CssClass="form_panel_checkbox_dropdown" ID="ddlVendorSubCategory" runat="server" UseSelectAllNode="false" AutoPostBack="true" OnSelectedIndexChanged="ddlVendorSubCategory_SelectedIndexChanged">
                                                 <Style SelectBoxWidth="100%" DropDownBoxBoxWidth="120" DropDownBoxBoxHeight="150" />
@@ -1647,7 +1658,9 @@
                                                     </tr>
                                                 </table>
                                             </asp:Panel>
+                                            </div>
                                         </td>
+                                      <td></td>
                                     </tr>
                                 </table>
                                 <div style="width: 100%">

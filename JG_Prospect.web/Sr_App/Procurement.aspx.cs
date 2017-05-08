@@ -28,10 +28,15 @@ namespace JG_Prospect.Sr_App
 {
   public partial class Procurement : System.Web.UI.Page
   {
+    #region Constants
+    private const string ALL_SELECTED = "--All--";
+    private const string DEFAULT_SELECT = "Select";
+    #endregion
 
     #region Variables
     //string flag = "";
     private Boolean IsPageRefresh = false;
+
     protected int estimateId
     {
       get { return (ViewState["EstimateID"] != null ? Convert.ToInt32(ViewState["EstimateID"]) : 0); }
@@ -402,7 +407,22 @@ namespace JG_Prospect.Sr_App
     {
       BindFilteredVendorList();
     }
+
+    protected void chkProductCategorySelectAll_CheckChanged(object sender, EventArgs e)
+    {
+      //Select All Items first
+      foreach (System.Web.UI.WebControls.ListItem item in ddlprdtCategory.Items)
+      { item.Selected = chkProductCategorySelectAll.Checked; }
+
+      ManageProductCategorySelectionChanged();
+    }
+
     protected void ddlprdtCategory_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      ManageProductCategorySelectionChanged();
+    }
+
+    private void ManageProductCategorySelectionChanged()
     {
       ddlVndrCategory.SelectedIndex = -1;
       ddlVendorSubCategory.SelectedIndex = -1;
@@ -416,29 +436,32 @@ namespace JG_Prospect.Sr_App
         ViewState["CheckedPc"] = ddlprdtCategory.SelectedValue;
       }
       BindVendorCatPopup();
+      List<string> lstSelectedProductCategories = new List<string>();
       if (ddlprdtCategory.SelectedValue.ToString() != "Select" && ddlprdtCategory.SelectedValue.ToString() != string.Empty)
       {
         //Set Selected Value's text tot he dropdown caption.
-        List<string> lstSelectedProductCategories = new List<string>();
         foreach (System.Web.UI.WebControls.ListItem item in ddlprdtCategory.Items)
         {
           if (item.Selected)
           { lstSelectedProductCategories.Add(item.Text); }
         }
-
-        ddlprdtCategory.Texts.SelectBoxCaption = string.Join(", ", lstSelectedProductCategories);
-
         ddlProductCatgoryPopup.SelectedValue = ddlprdtCategory.SelectedValue;
       }
       else
       {
         BindAllVendorCategory();
       }
+
+      if (ddlprdtCategory.Items.Count == lstSelectedProductCategories.Count())
+      { ddlprdtCategory.Texts.SelectBoxCaption = ALL_SELECTED; }
+      else if (lstSelectedProductCategories.Count() == 0)
+      { ddlprdtCategory.Texts.SelectBoxCaption = DEFAULT_SELECT; }
+      else
+      { ddlprdtCategory.Texts.SelectBoxCaption = string.Join(", ", lstSelectedProductCategories); }
+
       BindFilteredVendorList();
 
       UpdatePopupProductCategoryList();
-
-
     }
 
     protected void ddlprdtCategory1_SelectedIndexChanged(object sender, EventArgs e)
@@ -601,13 +624,28 @@ namespace JG_Prospect.Sr_App
         grdVendorList.DataBind();
       }
     }
+
+    protected void chkVendorCategorySelectAll_CheckedChanged(object sender, EventArgs e)
+    {
+      //Select All Items first
+      foreach (System.Web.UI.WebControls.ListItem item in ddlVndrCategory.Items)
+      { item.Selected = chkVendorCategorySelectAll.Checked; }
+
+      ManageVendorCategorySelection();
+    }
+
     protected void ddlVndrCategory_SelectedIndexChanged(object sender, EventArgs e)
     {
+      ManageVendorCategorySelection();
+    }
 
+    private void ManageVendorCategorySelection()
+    {
       ddlVendorSubCategory.SelectedIndex = -1;
       BindVendorSubCatByVendorCat(ddlVndrCategory.SelectedValue.ToString());
       //string ManufacturerType = GetManufacturerType();
       ViewState["CheckedVc"] = null;
+      List<string> lstSelectedVendorCategories = new List<string>();
       if (ddlVndrCategory.SelectedValue.ToString() != "0" && ddlVndrCategory.SelectedValue.ToString() != string.Empty)
       {
         //ERROR: Code done by Mr. Yogesh Keraliya has some error here.. plz check.
@@ -617,24 +655,28 @@ namespace JG_Prospect.Sr_App
         ViewState["CheckedVc"] = ddlVndrCategory.SelectedValue;
 
         //Set Selected Value's text tot he dropdown caption.
-        List<string> lstSelectedVendorCategories = new List<string>();
         foreach (System.Web.UI.WebControls.ListItem item in ddlVndrCategory.Items)
         {
           if (item.Selected)
           { lstSelectedVendorCategories.Add(item.Text); }
         }
-
-        ddlVndrCategory.Texts.SelectBoxCaption = string.Join(", ", lstSelectedVendorCategories);
       }
       else if (ddlVendorStatusfltr.SelectedValue.ToString() != "All")
       {
         FilterVendorByProductCategory();
       }
+
+      if (ddlVndrCategory.Items.Count == lstSelectedVendorCategories.Count())
+      { ddlVndrCategory.Texts.SelectBoxCaption = ALL_SELECTED; }
+      else if (lstSelectedVendorCategories.Count() == 0)
+      { ddlVndrCategory.Texts.SelectBoxCaption = DEFAULT_SELECT; }
+      else
+      { ddlVndrCategory.Texts.SelectBoxCaption = string.Join(", ", lstSelectedVendorCategories); }
+
       BindFilteredVendorList();
 
       UpdatePopupVendorCategoryList();
     }
-
     protected void ddlVndrCategory1_SelectedIndexChanged(object sender, EventArgs e)
     {
       ddlVendorSubCategory1.SelectedIndex = -1;
@@ -671,24 +713,42 @@ namespace JG_Prospect.Sr_App
       ddlVendorSubCategory1.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Select", "Select"));
     }
 
+    protected void chkVendorSubCategorySelectAll_CheckedChanged(object sender, EventArgs e)
+    {
+      //Select All Items first
+      foreach (System.Web.UI.WebControls.ListItem item in ddlVendorSubCategory.Items)
+      { item.Selected = chkVendorSubCategorySelectAll.Checked; }
+
+      ManageVendorSubCategorySelection();
+    }
     protected void ddlVendorSubCategory_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      ManageVendorSubCategorySelection();
+    }
+
+    private void ManageVendorSubCategorySelection()
     {
       BindFilteredVendorList();
       ViewState["CheckedVsc"] = null;
+      List<string> lstSelectedVendorCategories = new List<string>();
       if (!ddlVendorSubCategory.SelectedValue.Equals("Select"))
       {
         ViewState["CheckedVsc"] = ddlVendorSubCategory.SelectedValue;
 
         //Set Selected Value's text tot he dropdown caption.
-        List<string> lstSelectedVendorCategories = new List<string>();
         foreach (System.Web.UI.WebControls.ListItem item in ddlVndrCategory.Items)
         {
           if (item.Selected)
           { lstSelectedVendorCategories.Add(item.Text); }
         }
-
-        ddlVndrCategory.Texts.SelectBoxCaption = string.Join(", ", lstSelectedVendorCategories);
       }
+
+      if (ddlVendorSubCategory.Items.Count == lstSelectedVendorCategories.Count())
+      { ddlVendorSubCategory.Texts.SelectBoxCaption = ALL_SELECTED; }
+      else if (lstSelectedVendorCategories.Count() == 0)
+      { ddlVendorSubCategory.Texts.SelectBoxCaption = DEFAULT_SELECT; }
+      else
+      { ddlVendorSubCategory.Texts.SelectBoxCaption = string.Join(", ", lstSelectedVendorCategories); }
 
       UpdatePopupVendorSubCategoryList();
     }
