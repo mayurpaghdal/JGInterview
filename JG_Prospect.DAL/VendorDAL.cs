@@ -1127,7 +1127,7 @@ namespace JG_Prospect.DAL
     }
 
 
-        public DataSet fetchvendorcategory(bool Isretail_Wholesale, bool IsManufacturer)
+        public DataSet fetchvendorcategory(bool? Isretail_Wholesale, bool? IsManufacturer)
         {
             try
             {
@@ -1136,7 +1136,9 @@ namespace JG_Prospect.DAL
                     DS = new DataSet();
                     DbCommand command = database.GetStoredProcCommand("UDP_fetchvendorcategory");
                     command.CommandType = CommandType.StoredProcedure;
+          if(Isretail_Wholesale.HasValue)
                     database.AddInParameter(command, "@IsRetail_Wholesale", DbType.Boolean, Isretail_Wholesale);
+          if(IsManufacturer.HasValue)
                     database.AddInParameter(command, "@IsManufacturer", DbType.Boolean, IsManufacturer);
                     DS = database.ExecuteDataSet(command);
                     return DS;
