@@ -1127,28 +1127,26 @@ namespace JG_Prospect.DAL
     }
 
 
-    public DataSet fetchvendorcategory(bool? Isretail_Wholesale, bool? IsManufacturer)
-    {
-      try
-      {
+        public DataSet fetchvendorcategory(bool Isretail_Wholesale, bool IsManufacturer)
         {
-          SqlDatabase database = MSSQLDataBase.Instance.GetDefaultDatabase();
-          DS = new DataSet();
-          DbCommand command = database.GetStoredProcCommand("UDP_fetchvendorcategory");
-          command.CommandType = CommandType.StoredProcedure;
-          if (Isretail_Wholesale.HasValue)
-            database.AddInParameter(command, "@IsRetail_Wholesale", DbType.Boolean, Isretail_Wholesale);
-          if (IsManufacturer.HasValue)
-            database.AddInParameter(command, "@IsManufacturer", DbType.Boolean, IsManufacturer);
-          DS = database.ExecuteDataSet(command);
-          return DS;
+            try
+            {
+                {
+                    SqlDatabase database = MSSQLDataBase.Instance.GetDefaultDatabase();
+                    DS = new DataSet();
+                    DbCommand command = database.GetStoredProcCommand("UDP_fetchvendorcategory");
+                    command.CommandType = CommandType.StoredProcedure;
+                    database.AddInParameter(command, "@IsRetail_Wholesale", DbType.Boolean, Isretail_Wholesale);
+                    database.AddInParameter(command, "@IsManufacturer", DbType.Boolean, IsManufacturer);
+                    DS = database.ExecuteDataSet(command);
+                    return DS;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
-      }
-      catch (Exception ex)
-      {
-        return null;
-      }
-    }
 
     public DataSet GETInvetoryCatogriesList(string ManufactureType)
     {

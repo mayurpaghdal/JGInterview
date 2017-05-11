@@ -1439,18 +1439,19 @@
                                           <asp:RadioButton ID="rdoRetailWholesale" runat="server" Checked="false" Text="Retail/Wholesale" GroupName="MT" OnCheckedChanged="rdoRetailWholesale_CheckedChanged" AutoPostBack="true" />
                                         
                                             <asp:RadioButton ID="rdoManufacturer" runat="server" Text="Manufacturer" GroupName="MT" OnCheckedChanged="rdoManufacturer_CheckedChanged" AutoPostBack="true" />
+                                            </div>
                                         </td>
                                         <td style="padding-top: 19px;">
                                             <%--<div class="ui-widget">--%>
                                             <asp:TextBox ID="txtVendorSearchBox" runat="server" placeholder="Search" Width="90%"></asp:TextBox>
-                                            <%--</div>--%>
+                                            </div>
                                         </td>
                                         <td>
                                         <asp:ImageButton ID="btnSearchProcVendor" runat="server" ImageUrl="~/img/search_btn.png" CssClass="searchbtn" Style="display: none;" OnClick="btnSearch_Click" /></td>
                                         <input type="hidden" id="hdnvendorId" name="vendorId" />
                                         <input type="hidden" id="hdnVendorAddId" name="hdnVendorAddId" />
                                         <asp:Button ID="btnEditVendor" runat="server" Text="EditVendor" CssClass="clsbtnEditVendor" OnClick="btneditVendor_Click" />
-
+                                      
                                     </tr>
                                     <tr>
                                         <td style="padding-top: 19px;"><b>Product Category</b>
